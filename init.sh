@@ -1,13 +1,14 @@
 #!/bin/bash
 
-set -eu
+HOST=$POSTGRES_CONTAINER_NAME
+PORT=$POSTGRES_INTERNAL_PORT
 
-echo "Checking DB connection ..."
-
+echo "Checking DB connection; Hostname: ${HOST}, Port: ${PORT} ..."
 i=0
 until [ $i -ge 10 ]
 do
-  nc -z postgres-db 5432 && break
+  # check if a tcp connection with the database is possible 
+  nc -z $HOST $PORT && break
 
   i=$(( i + 1 ))
 
@@ -22,6 +23,6 @@ then
 fi
 
 echo "DB is up ..."
-ls -la
-chmod a+x ./app
-/app
+
+chmod +x /app
+./app

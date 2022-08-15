@@ -5,7 +5,7 @@ services:
     container_name: "${GO_CONTAINER_NAME}"
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: go.Dockerfile
     environment:
       GO_INTERNAL_PORT: ${GO_INTERNAL_PORT}
       POSTGRES_CONTAINER_NAME: ${POSTGRES_CONTAINER_NAME}

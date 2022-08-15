@@ -13,9 +13,8 @@ RUN go build -o app .
 
 ## Deploy
 FROM alpine:latest
-USER root
 WORKDIR /app
 COPY --from=builder /server/app .
-
-CMD ["./app"]
-# ENTRYPOINT ["sh", "init.sh"]
+COPY init.sh ./init.sh
+RUN chmod +x ./init.sh
+ENTRYPOINT ["sh", "init.sh"]
