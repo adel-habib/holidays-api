@@ -8,13 +8,13 @@ COPY go.mod ./
 COPY go.sum ./
 RUN go mod download
 
-COPY *.go ./
+COPY . .
 RUN go build -o app .
 
 ## Deploy
 FROM alpine:latest
 WORKDIR /app
 COPY --from=builder /server/app .
-COPY init.sh ./init.sh
+COPY ./scripts/init.sh ./init.sh
 RUN chmod +x ./init.sh
 ENTRYPOINT ["sh", "init.sh"]

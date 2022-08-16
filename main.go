@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"german-holidays/entities"
 	"log"
 	"os"
 	"time"
@@ -31,11 +32,13 @@ func main() {
 	)
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT)
-	_, err := gorm.Open(postgres.Open(dsn), &gorm.Config{Logger: dbLogger})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{Logger: dbLogger})
+
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println("Sucessfully connected to the database!")
+	err = db.AutoMigrate(&entities.Region{}, &entities.Holiday{})
 
 	router := gin.Default()
 

@@ -32,6 +32,10 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "${POSTGRES_EXTERNAL_PORT}:${POSTGRES_INTERNAL_PORT}"
+    volumes:
+      - ./scripts/schema.sql:/docker-entrypoint-initdb.d/1.schema.sql
+      - ./scripts/data.sql:/docker-entrypoint-initdb.d/2.data.sql
+
     networks:
       go-postgres-bridge:
 
